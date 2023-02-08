@@ -4,18 +4,18 @@ import streamlit as st
 import pandas as pd 
 import plost
 import pickle
-import sklearn
+#import sklearn
 #Classifier
 import lightgbm
 from lightgbm import LGBMClassifier
 ### Check Accuracy
-from sklearn.metrics import accuracy_score
+#from sklearn.metrics import accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 import requests
 import numpy as np
-from sklearn.preprocessing import StandardScaler
+#from sklearn.preprocessing import StandardScaler
 
 
 ###########
@@ -102,40 +102,40 @@ st.subheader("Profil du client vs clients solvables vs non solvables")
 
 # Radar Plot
 ## scaling des data du radar plot
-scaler = StandardScaler()
+#scaler = StandardScaler()
 
-st_data = scaler.fit_transform(data.drop(['ID','Target'],axis=1))
-st_data = pd.DataFrame(st_data, columns=data.drop(['ID','Target'],axis=1).columns)
-st_data["Target"] = data["Target"]
-st_data["ID"] = data["ID"]
+#st_data = scaler.fit_transform(data.drop(['ID','Target'],axis=1))
+#st_data = pd.DataFrame(st_data, columns=data.drop(['ID','Target'],axis=1).columns)
+#st_data["Target"] = data["Target"]
+#st_data["ID"] = data["ID"]
 
 ## création d'une dataframe avec les données du clients, le profil moyen des clients solvables, et celui des clients non solvables
 
 ### MODIF COULEUR XX
-client_data_0 = st_data[st_data['ID'] == number_id].drop(['ID', 'Target'], axis=1)
-mean_data_0 = st_data[st_data['Target'] == 0].drop(['ID', 'Target'], axis=1).mean().to_frame().T
-mean_data_1 = st_data[st_data['Target'] == 1].drop(['ID', 'Target'], axis=1).mean().to_frame().T
-scaled_df = pd.concat([client_data_0, mean_data_0, mean_data_1], ignore_index=True)
-scaled_df['Target'] = ['Client'] + ['Non_Solvable'] * len(mean_data_0) + ['Solvable'] * len(mean_data_1)
+#client_data_0 = st_data[st_data['ID'] == number_id].drop(['ID', 'Target'], axis=1)
+#mean_data_0 = st_data[st_data['Target'] == 0].drop(['ID', 'Target'], axis=1).mean().to_frame().T
+#mean_data_1 = st_data[st_data['Target'] == 1].drop(['ID', 'Target'], axis=1).mean().to_frame().T
+#scaled_df = pd.concat([client_data_0, mean_data_0, mean_data_1], ignore_index=True)
+#scaled_df['Target'] = ['Client'] + ['Non_Solvable'] * len(mean_data_0) + ['Solvable'] * len(mean_data_1)
 
 ## Création du radar plot
-number_of_variables = len(scaled_df.columns) - 1
-theta = np.linspace(0, 2 * np.pi, number_of_variables, endpoint=False)
-theta = np.concatenate([theta, [theta[0]]])
+#number_of_variables = len(scaled_df.columns) - 1
+#theta = np.linspace(0, 2 * np.pi, number_of_variables, endpoint=False)
+#theta = np.concatenate([theta, [theta[0]]])
 
-fig = plt.figure(figsize=(10, 10))
-ax = fig.add_subplot(111, polar=True)
-ax.set_xticks(theta[:-1])
-ax.set_xticklabels(scaled_df.columns[:-1])
+#fig = plt.figure(figsize=(10, 10))
+#ax = fig.add_subplot(111, polar=True)
+#ax.set_xticks(theta[:-1])
+#ax.set_xticklabels(scaled_df.columns[:-1])
 
-colors = {"Client": "blue", "Solvable": "green", "Non_Solvable": "red"}
-for i in range(len(scaled_df)):
-    values = scaled_df.iloc[i].drop('Target').values.flatten().tolist()
-    values += values[:1]
-    ax.plot(theta, values, 'o-', linewidth=2, color=colors[scaled_df.iloc[i]["Target"]])
+#colors = {"Client": "blue", "Solvable": "green", "Non_Solvable": "red"}
+#for i in range(len(scaled_df)):
+#    values = scaled_df.iloc[i].drop('Target').values.flatten().tolist()
+#    values += values[:1]
+#    ax.plot(theta, values, 'o-', linewidth=2, color=colors[scaled_df.iloc[i]["Target"]])
 
-ax.legend(scaled_df['Target'].unique())
-st.pyplot(fig)
+#ax.legend(scaled_df['Target'].unique())
+#st.pyplot(fig)
 
 
 ## Détails sur chaque features
