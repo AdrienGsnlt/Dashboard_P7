@@ -3,11 +3,8 @@
 import streamlit as st
 import pandas as pd 
 import plost
-import pickle
 #import sklearn
 #Classifier
-import lightgbm
-from lightgbm import LGBMClassifier
 ### Check Accuracy
 #from sklearn.metrics import accuracy_score
 import seaborn as sns
