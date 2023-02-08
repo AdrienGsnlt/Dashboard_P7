@@ -49,7 +49,7 @@ def color_jauge(score):
 
 ########
 # Importation des données
-path = "/app/data_api.csv"data_api.csv"
+path = "/app/data_api.csv"
 data = load_data(path)
 
 
