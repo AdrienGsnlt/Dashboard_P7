@@ -79,7 +79,7 @@ number_id = st.sidebar.number_input("ID du client",min_value = min(data["ID"]),m
 
 #processing des données
 client_data = id_client(data,number_id)
-client_data_proc = proc(client_data)
+client_data_proc = proc_data(client_data)
 
 ### Solvabilite du client
 
