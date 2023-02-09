@@ -59,6 +59,7 @@ def load_model(path_m):
 @st.cache
 def shap_explainer(data,clf):
     X = data.drop(["ID", "Target"], axis=1)
+    X = X.head(1000)
     explainer = shap.TreeExplainer(clf)
     return explainer
     
@@ -276,6 +277,7 @@ st.pyplot(fig)
 ### Features importances
 st.header("Importances des features dans la prédiction de solvabilité")
 X = data.drop(["ID", "Target"], axis=1)
+X = X.head(1000)
 shap_values=explainer.shap_values(X)
 shap_values_client=explainer.shap_values(client_data)
 
