@@ -11,3 +11,4 @@ gunicorn>=20.1.0
 shap== 0.41.0
 pickle5==0.0.11
 lightgbm==3.3.5
+ipython>=8.3.0
