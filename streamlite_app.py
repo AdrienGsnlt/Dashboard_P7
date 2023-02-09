@@ -111,8 +111,8 @@ if st.sidebar.checkbox("Voir plus de détails"):
     st.write("**EXT3 :**", client_data["EXT3"])
     st.write("**REGION_RATING :**", client_data["REGION_RATING"])
     st.write("**UNACCOMPANIED :**", client_data["UNACCOMPANIED"])
-    st.write("**EXT2 :**", client_data["EXT2"].v])
-    st.write("**INCOME_TYPE :**", client_data["INCOME_TYPE"].values[0])
+    st.write("**EXT2 :**", client_data["EXT2"])
+    st.write("**INCOME_TYPE :**", client_data["INCOME_TYPE"])
         
 
 st.header("Comparaison du client à la base de données")
