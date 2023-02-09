@@ -262,20 +262,19 @@ explainer = shap.TreeExplainer(clf)
 shap_values=explainer.shap_values(X)
 shap_values_client=explainer.shap_values(data_client)
 
-if st.checkbox("Voir les features importances globales"):
-    st.subheader("Globales")
-    shap.initjs()
-    ##Feature globale
-    fig, ax = plt.subplots(figsize=(10,10))
-    shap.summary_plot(shap_values[0],X,plot_type='bar',color_bar=False,plot_size=(5,5))
-    st.pyplot(fig)
-    
-if st.checkbox("Local"):
-    shap.initjs()
-    ##Feature globale
-    fig, ax = plt.subplots(figsize=(10,10))
-    shap.summary_plot(shap_values_client[0],X,plot_type='bar',color_bar=False,plot_size=(5,5))
-    st.pyplot(fig)
+##Feature globales
+st.subheader("Globales")
+shap.initjs()
+fig, ax = plt.subplots(figsize=(10,10))
+shap.summary_plot(shap_values[0],X,plot_type='bar',color_bar=False,plot_size=(5,5))
+st.pyplot(fig)
+
+##Feature Local   
+st.subheader("Local")
+shap.initjs()
+fig, ax = plt.subplots(figsize=(10,10))
+shap.summary_plot(shap_values_client[0],X,plot_type='bar',color_bar=False,plot_size=(5,5))
+st.pyplot(fig)
     
     
     
