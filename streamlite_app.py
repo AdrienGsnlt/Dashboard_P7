@@ -14,6 +14,8 @@ import requests
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 import shap
+import pickle5
+import lightgbm
 
 
 ###########
@@ -50,6 +52,14 @@ def color_jauge(score):
 path = "/app/data_api.csv"
 data = load_data(path)
 
+
+#importation du modèle
+try:
+    pickle_in = open("/app/clf.pkl", "rb")
+    clf = pickle.load(pickle_in)
+except Exception as e:
+    print("Error loading the saved model")
+    print(e)
 
 #####################################
 # Main Content
