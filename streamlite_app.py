@@ -58,10 +58,6 @@ def color_jauge(score):
 # Importation des données
 path = "/app/data_api.csv"
 data = load_data(path)
-#format des données
-data_proc = proc_data(data)
-
-
 
 
 #####################################
@@ -79,7 +75,6 @@ number_id = st.sidebar.number_input("ID du client",min_value = min(data["ID"]),m
 
 #processing des données
 client_data = id_client(data,number_id)
-client_data_proc = proc_data(client_data)
 
 ### Solvabilite du client
 
@@ -107,13 +102,13 @@ else : st.write ("Le client n'est pas solvable")
 
 ##Description du client
 if st.sidebar.checkbox("Voir plus de détails"): 
-    st.write("**GENDER**".client_data_proc["GENDER"].values[0])
-    st.write("**BUSINESS_TYPE :**", client_data_proc["BUSINESS_TYPE"])
-    st.write("**EXT3 :**", client_data_proc["EXT3"])
-    st.write("**REGION_RATING :**", client_data_proc["REGION_RATING"])
-    st.write("**UNACCOMPANIED :**", client_data_proc["UNACCOMPANIED"])
-    st.write("**EXT2 :**", client_data_proc["EXT2"])
-    st.write("**INCOME_TYPE :**", client_data_proc["INCOME_TYPE"])
+    st.write("**GENDER**".client_data["GENDER"])
+    st.write("**BUSINESS_TYPE :**", client_data["BUSINESS_TYPE"])
+    st.write("**EXT3 :**", client_data["EXT3"])
+    st.write("**REGION_RATING :**", client_data["REGION_RATING"])
+    st.write("**UNACCOMPANIED :**", client_data["UNACCOMPANIED"])
+    st.write("**EXT2 :**", client_data["EXT2"])
+    st.write("**INCOME_TYPE :**", client_data["INCOME_TYPE"])
         
 
 st.header("Comparaison du client à la base de données")
@@ -123,10 +118,10 @@ st.subheader("Profil du client vs clients solvables vs non solvables")
 ## scaling des data du radar plot
 scaler = StandardScaler()
 
-st_data = scaler.fit_transform(data_proc.drop(['ID','Target'],axis=1))
-st_data = pd.DataFrame(st_data, columns=data_proc.drop(['ID','Target'],axis=1).columns)
-st_data["Target"] = data_proc["Target"]
-st_data["ID"] = data_proc["ID"]
+st_data = scaler.fit_transform(data.drop(['ID','Target'],axis=1))
+st_data = pd.DataFrame(st_data, columns=data.drop(['ID','Target'],axis=1).columns)
+st_data["Target"] = data["Target"]
+st_data["ID"] = data["ID"]
 
 ## création d'une dataframe avec les données du clients, le profil moyen des clients solvables, et celui des clients non solvables
 
