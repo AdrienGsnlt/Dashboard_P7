@@ -22,7 +22,7 @@ import lightgbm
 ###########
 #definition des fonctions utilies
 
-#@st.cache
+@st.cache
 def load_data(path):
     data = pd.read_csv(path) 
     return data
@@ -47,16 +47,33 @@ def color_jauge(score):
         return "rgb({}, {}, 0)".format(r, g)
     else:
         return "rgb(255, 0, 0)"
+    
+##modèle
+@st.cache
+def load_model(path_m):
+    pickle_in = open(path_m, "rb")
+    clf = pickle.load(pickle_in)
+    return clf
 
+##Shap explainer
+@st.cache
+def shap_explainer(data,clf):
+    X = data.drop(["ID", "Target"], axis=1)
+    explainer = shap.TreeExplainer(clf)
+    return explainer
+    
+    
 ########
 # Importation des données
 path = "/app/data_api.csv"
-data = load_data(path)
-
+data = load_data(path) 
 
 #importation du modèle
-pickle_in = open("/app/clf.pkl", "rb")
-clf = pickle.load(pickle_in)
+path_m = "/app/clf.pkl"
+clf = load_model(path_m)
+
+### shap explainer
+explainer = shap_explainer(data,clf)
 
 #####################################
 # Main Content
@@ -151,8 +168,8 @@ st.pyplot(fig)
 
 
 ## Détails sur chaque features
-st.subheader("Details sur chaque features")
-option_feat= st.sidebar.selectbox("Features", ("GENDER","BUSINESS_TYPE","EXT3","REGION_RATING","UNACCOMPANIED","EXT2","INCOME_TYPE"))
+st.subheader("Details sur chaque feature")
+option_feat= st.sidebar.selectbox("Details Features", ("GENDER","BUSINESS_TYPE","EXT3","REGION_RATING","UNACCOMPANIED","EXT2","INCOME_TYPE"))
 st.header(option_feat)
 
 if option_feat == "GENDER":
@@ -249,7 +266,7 @@ if option_feat == "INCOME_TYPE":
 
 
 ### Scatter plot
-st.header("Scatter Plot")
+st.header("Scatter Plot Entre les 2 principales features")
 color_client = color_jauge(score)
 fig, ax = plt.subplots(figsize=(10,10))
 sns.scatterplot(data=data, x=round(data["GENDER"],2),y=data["BUSINESS_TYPE"],hue="Target")
@@ -257,22 +274,19 @@ sns.scatterplot(data=client_data, x=round(client_data["GENDER"],2),y=client_data
 st.pyplot(fig)
 
 ### Features importances
-st.header("Features Importances")
+st.header("Importances des features dans la prédiction de solvabilité")
 X = data.drop(["ID", "Target"], axis=1)
-explainer = shap.TreeExplainer(clf)
 shap_values=explainer.shap_values(X)
 shap_values_client=explainer.shap_values(client_data)
 
 ##Feature globales
-st.subheader("Globales")
-shap.initjs()
+st.subheader("Feature Importance Globale")
 fig, ax = plt.subplots(figsize=(10,10))
 shap.summary_plot(shap_values[0],X,plot_type='bar',color_bar=False,plot_size=(5,5))
 st.pyplot(fig)
 
 ##Feature Local   
-st.subheader("Local")
-shap.initjs()
+st.subheader("Feature Importance du client ")
 fig, ax = plt.subplots(figsize=(10,10))
 shap.summary_plot(shap_values_client[0],X,plot_type='bar',color_bar=False,plot_size=(5,5))
 st.pyplot(fig)
