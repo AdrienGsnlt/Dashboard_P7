@@ -13,6 +13,7 @@ import plotly.express as px
 import requests
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+import shap
 
 
 ###########
@@ -247,3 +248,28 @@ fig, ax = plt.subplots(figsize=(10,10))
 sns.scatterplot(data=data, x=round(data["GENDER"],2),y=data["BUSINESS_TYPE"],hue="Target")
 sns.scatterplot(data=client_data, x=round(client_data["GENDER"],2),y=client_data["BUSINESS_TYPE"], color='red', s=400)
 st.pyplot(fig)
+
+### Features importances
+st.header("Features Importances")
+X = data.drop(["ID", "Target"], axis=1)
+explainer = shap.TreeExplainer(clf)
+shap_values=explainer.shap_values(X)
+shap_values_client=explainer.shap_values(data_client)
+
+if st.checkbox("Voir les features importances globales"):
+    st.subheader("Globales")
+    shap.initjs()
+    ##Feature globale
+    fig, ax = plt.subplots(figsize=(10,10))
+    shap.summary_plot(shap_values[0],X,plot_type='bar',color_bar=False,plot_size=(5,5))
+    st.pyplot(fig)
+    
+if st.checkbox("Local"):
+    shap.initjs()
+    ##Feature globale
+    fig, ax = plt.subplots(figsize=(10,10))
+    shap.summary_plot(shap_values_client[0],X,plot_type='bar',color_bar=False,plot_size=(5,5))
+    st.pyplot(fig)
+    
+    
+    
