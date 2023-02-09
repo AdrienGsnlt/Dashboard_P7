@@ -29,7 +29,7 @@ def id_client(data,id):
     data_client = data_client.drop(["ID", "Target"], axis=1)
     return data_client
 
-@st.cache
+#@st.cache
 def proc_data(data):
     data["GENDER"] = data["GENDER"].astype(float)
     data["BUSINESS_TYPE"] = data["BUSINESS_TYPE"].astype(float)
@@ -57,9 +57,9 @@ def color_jauge(score):
 ########
 # Importation des données
 path = "/app/data_api.csv"
-data = load_data(path)
+data_b = load_data(path)
 #format des données
-data = proc_data(data)
+data = proc_data(data_b)
 
 
 
@@ -106,12 +106,12 @@ else : st.write ("Le client n'est pas solvable")
 
 ##Description du client
 if st.sidebar.checkbox("Voir plus de détails"): 
-    st.write("**GENDER**".client_data["GENDER"].values[0])
-    st.write("**BUSINESS_TYPE :**", client_data["BUSINESS_TYPE"].values[0])
-    st.write("**EXT3 :**", client_data["EXT3"].values[0])
-    st.write("**REGION_RATING :**", client_data["REGION_RATING"].values[0])
-    st.write("**UNACCOMPANIED :**", client_data["UNACCOMPANIED"].values[0])
-    st.write("**EXT2 :**", client_data["EXT2"].values[0])
+    st.write("**GENDER**".client_data["GENDER"])
+    st.write("**BUSINESS_TYPE :**", client_data["BUSINESS_TYPE"])
+    st.write("**EXT3 :**", client_data["EXT3"])
+    st.write("**REGION_RATING :**", client_data["REGION_RATING"])
+    st.write("**UNACCOMPANIED :**", client_data["UNACCOMPANIED"])
+    st.write("**EXT2 :**", client_data["EXT2"].v])
     st.write("**INCOME_TYPE :**", client_data["INCOME_TYPE"].values[0])
         
 
