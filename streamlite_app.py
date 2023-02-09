@@ -13,6 +13,7 @@ import plotly.express as px
 import requests
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+import IPython
 import shap
 import pickle5 as pickle
 import lightgbm
