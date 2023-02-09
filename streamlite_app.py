@@ -23,21 +23,11 @@ def load_data(path):
     data = pd.read_csv(path) 
     return data
 
-@st.cache
+#@st.cache
 def id_client(data,id):
     data_client = data[data["ID"] == number_id]
     data_client = data_client.drop(["ID", "Target"], axis=1)
     return data_client
-
-#@st.cache
-def proc_data(data):
-    data["GENDER"] = data["GENDER"].astype(float)
-    data["BUSINESS_TYPE"] = data["BUSINESS_TYPE"].astype(float)
-    data["EXT3"] = data["EXT3"].astype(float)
-    data["REGION_RATING"] = data["GENDER"].astype(float)
-    data["UNACCOMPANIED"] = data["UNACCOMPANIED"].astype(float)
-    data["EXT2"] = data["EXT2"].astype(float)
-    data["INCOME_TYPE"] = data["INCOME_TYPE"].astype(float)
 
 ## Jauge colorée
 def color_jauge(score):
@@ -102,7 +92,7 @@ else : st.write ("Le client n'est pas solvable")
 
 ##Description du client
 if st.sidebar.checkbox("Voir plus de détails"): 
-    st.write("**GENDER :**".client_data["GENDER"].values[0])
+    st.write("**GENDER :**", client_data["GENDER"].values[0])
     st.write("**BUSINESS_TYPE :**", client_data["BUSINESS_TYPE"].values[0])
     st.write("**EXT3 :**", client_data["EXT3"].values[0])
     st.write("**REGION_RATING :**", client_data["REGION_RATING"].values[0])
