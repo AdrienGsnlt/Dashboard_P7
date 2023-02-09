@@ -56,7 +56,7 @@ def load_model(path_m):
     return clf
 
 ##Shap explainer
-@st.cache
+#@st.cache
 def shap_explainer(data,clf):
     X = data.drop(["ID", "Target"], axis=1)
     X = X.head(1000)
