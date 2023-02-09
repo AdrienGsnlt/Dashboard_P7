@@ -68,8 +68,6 @@ data = proc_data(data)
 # Main Content
 #####################################
 
-st.set_page_config(layout='wide',initial_sidebar_state='expanded')
-
 st.title("Score de solvabilité banquaire")
 st.header("Evaluation du client")
 
