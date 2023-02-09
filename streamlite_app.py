@@ -23,7 +23,7 @@ def load_data(path):
     data = pd.read_csv(path) 
     return data
 
-#@st.cache
+@st.cache
 def id_client(data,id):
     data_client = data[data["ID"] == number_id]
     data_client = data_client.drop(["ID", "Target"], axis=1)
@@ -102,13 +102,13 @@ else : st.write ("Le client n'est pas solvable")
 
 ##Description du client
 if st.sidebar.checkbox("Voir plus de détails"): 
-    st.write("**GENDER**".client_data["GENDER"])
-    st.write("**BUSINESS_TYPE :**", client_data["BUSINESS_TYPE"])
-    st.write("**EXT3 :**", client_data["EXT3"])
-    st.write("**REGION_RATING :**", client_data["REGION_RATING"])
-    st.write("**UNACCOMPANIED :**", client_data["UNACCOMPANIED"])
-    st.write("**EXT2 :**", client_data["EXT2"])
-    st.write("**INCOME_TYPE :**", client_data["INCOME_TYPE"])
+    st.write("**GENDER :**".client_data["GENDER"].values[0])
+    st.write("**BUSINESS_TYPE :**", client_data["BUSINESS_TYPE"].values[0])
+    st.write("**EXT3 :**", client_data["EXT3"].values[0])
+    st.write("**REGION_RATING :**", client_data["REGION_RATING"].values[0])
+    st.write("**UNACCOMPANIED :**", client_data["UNACCOMPANIED"].values[0])
+    st.write("**EXT2 :**", client_data["EXT2"].values[0])
+    st.write("**INCOME_TYPE :**", client_data["INCOME_TYPE"].values[0])
         
 
 st.header("Comparaison du client à la base de données")
