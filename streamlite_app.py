@@ -260,7 +260,7 @@ st.header("Features Importances")
 X = data.drop(["ID", "Target"], axis=1)
 explainer = shap.TreeExplainer(clf)
 shap_values=explainer.shap_values(X)
-shap_values_client=explainer.shap_values(data_client)
+shap_values_client=explainer.shap_values(client_data)
 
 ##Feature globales
 st.subheader("Globales")
