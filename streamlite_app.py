@@ -276,24 +276,6 @@ sns.scatterplot(data=client_data, x=round(client_data["EXT2"],2),y=client_data["
 st.pyplot(fig)
 
 
-### Pie Chart
-st.header("Relation bivariée entre les deux principales features")
-# Create a pivot table to count the number of occurrences of each combination of GENDER and BUSINESS_TYPE
-pivot = data.pivot_table(index="GENDER", columns="BUSINESS_TYPE", values="Target", aggfunc="count")
-
-# Plot the pivot table as a bar chart
-fig, ax = plt.subplots(figsize=(10,10))
-pivot.plot(kind="bar", stacked=True, ax=ax)
-
-# Highlight the values in the client data
-for i, row in client_data.iterrows():
-    height = pivot.loc[row["GENDER"], row["BUSINESS_TYPE"]]
-    ax.bar(row["GENDER"], height, color="red")
-
-st.pyplot(fig)
-
-
-
 ### Features importances
 st.header("Importances des features dans la prédiction de solvabilité")
 X = data.drop(["ID", "Target"], axis=1)
