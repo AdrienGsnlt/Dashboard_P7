@@ -283,7 +283,7 @@ fig, ax = plt.subplots(figsize=(10,10))
 data_gb = data.groupby(["GENDER", "BUSINESS_TYPE"]).size().reset_index(name="Counts")
 sizes = data_gb["Counts"].values
 labels = [f"Gender: {int(row[0])}, Business Type: {int(row[1])}" for i, row in data_gb.iterrows()]
-wedges, texts = ax.pie(sizes, labels=labels, autopct='%1.1f%%')
+wedges, texts, *_ = ax.pie(sizes, labels=labels, autopct='%1.1f%%')
 
 data_client_gb = client_data.groupby(["GENDER", "BUSINESS_TYPE"]).size().reset_index(name="Counts")
 client_combination = [f"{int(row[0])}, {int(row[1])}" for i, row in data_client_gb.iterrows()]
@@ -295,7 +295,7 @@ for wedge in wedges:
 
 sizes_client = data_client_gb["Counts"].values
 labels_client = [f"Gender: {int(row[0])}, Business Type: {int(row[1])}" for i, row in data_client_gb.iterrows()]
-wedges_client, texts_client = ax.pie(sizes_client, labels=labels_client, autopct='%1.1f%%', colors='red', radius=0.75)
+wedges_client, texts_client, *_ = ax.pie(sizes_client, labels=labels_client, autopct='%1.1f%%', colors='red', radius=0.75)
 
 ax.legend(labels=['Data', 'Client Data'])
 st.pyplot(fig)
