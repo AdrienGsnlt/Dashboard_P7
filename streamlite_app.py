@@ -111,10 +111,10 @@ fig.update_traces(textinfo='none')
 st.plotly_chart(fig)
 
 if prediction >=.95:
-    st.write("Le client est solvable")
+    st.write("Le client est **solvable**")
 elif prediction >= 90:
-    st.write ("Le présente un léger risque de non-solvabilité")
-else : st.write ("Le client n'est pas solvable")
+    st.write ("Le présente un **léger risque de non-solvabilité**")
+else : st.write ("Le client n'est **pas solvable**")
 
 ##Description du client
 if st.sidebar.checkbox("Voir plus de détails"): 
@@ -167,6 +167,7 @@ for i in range(len(scaled_df)):
 ax.legend(scaled_df['Target'].unique())
 st.pyplot(fig)
 
+st.write("Ce graphique représente la valeurs des features ayant servis à la prédiction de solvabilité du client (en bleu) afin de les comparer aux valeurs moyennes des clients solvables (vert) et non-solvables (rouge)")
 
 ## Détails sur chaque features
 st.subheader("Details sur chaque feature")
@@ -267,12 +268,29 @@ if option_feat == "INCOME_TYPE":
 
 
 ### Scatter plot
-st.header("Scatter Plot Entre les 2 principales features")
+st.header("Scatter Plot Entre EXT2 et EXT3")
 color_client = color_jauge(score)
 fig, ax = plt.subplots(figsize=(10,10))
-sns.scatterplot(data=data, x=round(data["GENDER"],2),y=data["BUSINESS_TYPE"],hue="Target")
-sns.scatterplot(data=client_data, x=round(client_data["GENDER"],2),y=client_data["BUSINESS_TYPE"], color='red', s=400)
+sns.scatterplot(data=data, x=round(data["EXT2"],2),y=data["EXT3"],hue="Target")
+sns.scatterplot(data=client_data, x=round(client_data["EXT2"],2),y=client_data["EXT3"], color='red', s=400)
 st.pyplot(fig)
+
+
+### Pie Chart
+st.header("Pie Chart Entre les deux principales features")
+fig, ax = plt.subplots(figsize=(10,10))
+data_gb = data.groupby(["GENDER", "BUSINESS_TYPE"]).size().reset_index(name="Counts")
+sizes = data_gb["Counts"].values
+labels = [f"Gender: {int(row[0])}, Business Type: {int(row[1])}" for i, row in data_gb.iterrows()]
+ax.pie(sizes, labels=labels, autopct='%1.1f%%')
+
+data_client_gb = client_data.groupby(["GENDER", "BUSINESS_TYPE"]).size().reset_index(name="Counts")
+sizes_client = data_client_gb["Counts"].values
+labels_client = [f"Gender: {int(row[0])}, Business Type: {int(row[1])}" for i, row in data_client_gb.iterrows()]
+ax.pie(sizes_client, labels=labels_client, autopct='%1.1f%%', colors='red', radius=0.75)
+ax.legend(labels=['Data', 'Client Data'])
+st.pyplot(fig)
+
 
 ### Features importances
 st.header("Importances des features dans la prédiction de solvabilité")
@@ -287,11 +305,15 @@ fig, ax = plt.subplots(figsize=(10,10))
 shap.summary_plot(shap_values[0],X,plot_type='bar',color_bar=False,plot_size=(5,5))
 st.pyplot(fig)
 
+st.write("Ce graphique représente les features importances globales sur un échantillon de la base de données")
+
 ##Feature Local   
 st.subheader("Feature Importance du client ")
 fig, ax = plt.subplots(figsize=(10,10))
 shap.summary_plot(shap_values_client[0],X,plot_type='bar',color_bar=False,plot_size=(5,5))
 st.pyplot(fig)
+
+st.write("Ce graphique représente le poids des informations du clients dans la prédiction de sa solvabilité")
     
     
     
