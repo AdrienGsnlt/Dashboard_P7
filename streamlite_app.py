@@ -278,15 +278,17 @@ st.pyplot(fig)
 
 ### Pie Chart
 st.header("Relation bivariée entre les deux principales features")
-fig, ax = plt.subplots(figsize=(10,10))
-sns.countplot(x="GENDER", hue="BUSINESS_TYPE", data=data, ax=ax)
+# Create a pivot table to count the number of occurrences of each combination of GENDER and BUSINESS_TYPE
+pivot = data.pivot_table(index="GENDER", columns="BUSINESS_TYPE", values="Target", aggfunc="count")
 
-# Highlight the values of client_data on the plot
-for i, bar in enumerate(ax.containers):
-    if (bar.get_label() == str(client_data.loc[0, "GENDER"]) and
-        int(bar.get_width()) == int(client_data.loc[0, "BUSINESS_TYPE"])):
-        bar.bar_label.set_color("red")
-        bar.bar_label.set_weight("bold")
+# Plot the pivot table as a bar chart
+fig, ax = plt.subplots(figsize=(10,10))
+pivot.plot(kind="bar", stacked=True, ax=ax)
+
+# Highlight the values in the client data
+for i, row in client_data.iterrows():
+    height = pivot.loc[row["GENDER"], row["BUSINESS_TYPE"]]
+    ax.bar(row["GENDER"], height, color="red")
 
 st.pyplot(fig)
 
