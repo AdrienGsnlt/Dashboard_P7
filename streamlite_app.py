@@ -284,7 +284,7 @@ sns.countplot(x="GENDER", hue="BUSINESS_TYPE", data=data, ax=ax)
 # Highlight the values of client_data on the plot
 for i, bar in enumerate(ax.containers):
     if (bar.get_label() == str(client_data.loc[0, "GENDER"]) and
-        int(bar.get_height()) == int(client_data.loc[0, "BUSINESS_TYPE"])):
+        int(bar.get_width()) == int(client_data.loc[0, "BUSINESS_TYPE"])):
         bar.bar_label.set_color("red")
         bar.bar_label.set_weight("bold")
 
