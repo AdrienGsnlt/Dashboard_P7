@@ -277,27 +277,17 @@ st.pyplot(fig)
 
 
 ### Pie Chart
-st.header("Pie Chart Entre les deux principales features")
+st.header("Relation bivariée entre les deux principales features")
 fig, ax = plt.subplots(figsize=(10,10))
+sns.countplot(x="GENDER", hue="BUSINESS_TYPE", data=data, ax=ax)
 
-data_gb = data.groupby(["GENDER", "BUSINESS_TYPE"]).size().reset_index(name="Counts")
-sizes = data_gb["Counts"].values
-labels = [f"Gender: {int(row[0])}, Business Type: {int(row[1])}" for i, row in data_gb.iterrows()]
-wedges, texts, *_ = ax.pie(sizes, labels=labels, autopct='%1.1f%%')
+# Highlight the values of client_data on the plot
+for i, bar in enumerate(ax.containers):
+    if (bar.get_label() == str(client_data.loc[0, "GENDER"]) and
+        int(bar.get_height()) == int(client_data.loc[0, "BUSINESS_TYPE"])):
+        bar.bar_label.set_color("red")
+        bar.bar_label.set_weight("bold")
 
-data_client_gb = client_data.groupby(["GENDER", "BUSINESS_TYPE"]).size().reset_index(name="Counts")
-client_combination = [f"{int(row[0])}, {int(row[1])}" for i, row in data_client_gb.iterrows()]
-for wedge in wedges:
-    label = wedge.get_label()
-    if label in client_combination:
-        wedge.set_hatch("/")
-        wedge.set_edgecolor("black")
-
-sizes_client = data_client_gb["Counts"].values
-labels_client = [f"Gender: {int(row[0])}, Business Type: {int(row[1])}" for i, row in data_client_gb.iterrows()]
-wedges_client, texts_client, *_ = ax.pie(sizes_client, labels=labels_client, autopct='%1.1f%%', colors='red', radius=0.75)
-
-ax.legend(labels=['Data', 'Client Data'])
 st.pyplot(fig)
 
 
